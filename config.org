@@ -22,6 +22,7 @@
   - [[#disable-electric-indent][Disable Electric Indent]]
   - [[#source-code-block-tag-expansion][Source Code Block Tag Expansion]]
   - [[#add-org-modules-example][Add org modules example]]
+  - [[#org-capture-auto-insert-mode][Org-capture, auto insert mode]]
 - [[#reload-emacs][RELOAD EMACS]]
 - [[#sudo-edit][SUDO EDIT]]
 - [[#which-key][WHICH-KEY]]
@@ -114,15 +115,17 @@
 #+end_src
 
 ** Load Magit
-#+begin_src emacs-lisp
 
-(use-package magit
-:config 
-(vash/leader-keys
-"g g" '(magit-status :wk "Magit Status")
-)
-)
-#+end_src
+
+# #+begin_src emacs-lisp
+
+# (use-package magit
+# :config 
+# (vash/leader-keys
+# "g g" '(magit-status :wk "Magit Status")
+# )
+# )
+# #+end_src
 
 ** General Keybindings
 
@@ -167,10 +170,18 @@
          "h v" '(describe-variable :wk "Describe Variable")
          ;; "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config"))
          "h r r" '(reload-init-file :wk "Reload emacs config"))
+
        (vash/leader-keys
         "t" '(:ignore t :wk "Toggle")
         "t l" '(display-line-numbers-mode 'relative :wk "Toggle line numbers")
         "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+
+
+(vash/leader-keys
+"o" '(:ignore t :wk "Org")
+"o a" '(org-agenda :wk "Org Agenda")
+"o t" '(org-todo :wk "Org TODO")
+"o c" '(org-capture :wk "Org Capture"))
 
 
 
@@ -244,12 +255,14 @@ Let's make GNU Emacs look a little better.
 #+end_src
 
 * ORG MODE
+
 ** Enabling Table of Contents
 #+begin_src emacs-lisp
   (use-package toc-org
       :commands toc-org-enable
       :init (add-hook 'org-mode-hook 'toc-org-enable))
 #+end_src
+
 
 ** Enabling Org Bullets
 Org-bullets gives us attractive bullets rather than asterisks.
@@ -296,6 +309,10 @@ This is an example of how I can add org modules if needed
 
 # (add-to-list 'org-modules 'org-tempo t)
 
+** Org-capture, auto insert mode
+#+begin_src emacs-lisp
+(add-hook 'org-capture-mode-hook 'evil-insert-state)
+#+end_src
 
 * RELOAD EMACS
 

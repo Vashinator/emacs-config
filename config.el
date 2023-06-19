@@ -75,61 +75,62 @@
 ;; Don't install anything. Defer execution of BODY
 ;; (elpaca nil (message "deferred"))
 
-(use-package magit
-:config 
-(vash/leader-keys
-"g g" '(magit-status :wk "Magit Status")
-)
-)
-
 (use-package general
-     :config
-     (general-evil-setup)
+       :config
+       (general-evil-setup)
 
-     ;; set up 'SPC' as the global leader key
-     (general-create-definer vash/leader-keys
-       :states '(normal insert visual emacs)
-       :keymaps 'override
-       :prefix "SPC" ;; set leader
-       :global-prefix "M-SPC") ;; access leader in insert mode
+       ;; set up 'SPC' as the global leader key
+       (general-create-definer vash/leader-keys
+         :states '(normal insert visual emacs)
+         :keymaps 'override
+         :prefix "SPC" ;; set leader
+         :global-prefix "M-SPC") ;; access leader in insert mode
 
-     (vash/leader-keys
-      "." '(find-file :wk "Find file")
-      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Eidt emacs config")
-      "TAB TAB" '(comment-line :wk "Comment Lines"))
+       (vash/leader-keys
+        "." '(find-file :wk "Find file")
+        "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Eidt emacs config")
+        "TAB TAB" '(comment-line :wk "Comment Lines"))
 
-     (vash/leader-keys
-       "b" '(:ignore t :wk "buffer")
-       "b b" '(switch-to-buffer :wk "Switch buffer")
-       "b i" '(ibuffer :wk "IBuffer")
-       "b k" '(kill-this-buffer :wk "Kill this buffer")
-       "b n" '(next-buffer :wk "Next buffer")
-       "b p" '(previous-buffer :wk "Previous buffer")
-       "b r" '(revert-buffer :wk "Reload buffer"))
+       (vash/leader-keys
+         "b" '(:ignore t :wk "buffer")
+         "b b" '(switch-to-buffer :wk "Switch buffer")
+         "b i" '(ibuffer :wk "IBuffer")
+         "b k" '(kill-this-buffer :wk "Kill this buffer")
+         "b n" '(next-buffer :wk "Next buffer")
+         "b p" '(previous-buffer :wk "Previous buffer")
+         "b r" '(revert-buffer :wk "Reload buffer"))
 
-     (vash/leader-keys
-       "e" '(:ignore t :wk "Evaluate")
-       "e b" `(eval-buffer :wk "Evaluate elisp in buffer")
-       "e d" `(eval-defun :wk "Evaluate defun containing or after point")
-       "e e" `(eval-expression :wk "Evaluate and elisp expression")
-       "e l" `(eval-last-sexp :wk "Evaluate elisp expression before point")
-       "e r" '(eval-region :wk "Evaluate elisp in region"))
+       (vash/leader-keys
+         "e" '(:ignore t :wk "Evaluate")
+         "e b" `(eval-buffer :wk "Evaluate elisp in buffer")
+         "e d" `(eval-defun :wk "Evaluate defun containing or after point")
+         "e e" `(eval-expression :wk "Evaluate and elisp expression")
+         "e l" `(eval-last-sexp :wk "Evaluate elisp expression before point")
+         "e r" '(eval-region :wk "Evaluate elisp in region"))
 
-     (vash/leader-keys
-       "h" '(:ignore t :wk "help")
-       "h f" '(describe-fuction :wk "Describe function")
-       "h v" '(describe-variable :wk "Describe Variable")
-       ;; "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config"))
-       "h r r" '(reload-init-file :wk "Reload emacs config"))
-     (vash/leader-keys
-      "t" '(:ignore t :wk "Toggle")
-      "t l" '(display-line-numbers-mode 'relative :wk "Toggle line numbers")
-      "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+       (vash/leader-keys
+         "h" '(:ignore t :wk "help")
+         "h f" '(describe-fuction :wk "Describe function")
+         "h v" '(describe-variable :wk "Describe Variable")
+         ;; "h r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config"))
+         "h r r" '(reload-init-file :wk "Reload emacs config"))
+
+       (vash/leader-keys
+        "t" '(:ignore t :wk "Toggle")
+        "t l" '(display-line-numbers-mode 'relative :wk "Toggle line numbers")
+        "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+
+
+(vash/leader-keys
+"o" '(:ignore t :wk "Org")
+"o a" '(org-agenda :wk "Org Agenda")
+"o t" '(org-todo :wk "Org TODO")
+"o c" '(org-capture :wk "Org Capture"))
 
 
 
 
-)
+  )
 
 (set-face-attribute 'default nil
   :font "JetBrains Mono"
@@ -183,6 +184,8 @@
 (electric-indent-mode -1)
 
 (require 'org-tempo)
+
+(add-hook 'org-capture-mode-hook 'evil-insert-state)
 
 (defun reload-init-file ()
 (interactive)
